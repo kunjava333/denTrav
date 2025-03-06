@@ -1,9 +1,24 @@
 import React from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
   return (
     <>
       <footer className="bg-white dark:bg-gray-900 mt-60">
+
+          {/*  Subscription */}
+      <div className="max-w-4xl mx-auto mb-16">
+        <div className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row gap-4">
+          <div className="flex-1 relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Input type="email" placeholder="Enter your email address" className="pl-10 w-full" />
+          </div>
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer">Subscribe</Button>
+        </div>
+      </div>
+
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 flex flex-col gap-14 md:mb-0">
