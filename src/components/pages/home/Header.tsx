@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Clock, Mail, SmileIcon as Tooth, Phone, Wrench } from "lucide-react";
-import { Button } from "./ui/button"
+import { Button } from "../../ui/button"
 import header from '@../../../public/header.jpg';
 
 export default function Home() {

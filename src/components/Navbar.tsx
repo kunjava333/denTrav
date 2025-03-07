@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 
 export default function Navbar() {
@@ -53,10 +54,14 @@ export default function Navbar() {
           >
             <ul className="flex flex-col text-blue-600 p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-               HOME
+                <Link href={'/'}>
+                   HOME
+                </Link>
               </li>
               <li>
+                <Link href={"/contact"}>
                  CONTACT
+                </Link>
               </li>
               <li>
                  SERVICES
