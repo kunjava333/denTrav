@@ -69,7 +69,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link href={"about"}>
                  ABOUT US
+                </Link>
               </li>
               <li>
                  LOCATION
