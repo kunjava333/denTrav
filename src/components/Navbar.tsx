@@ -64,7 +64,9 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link href={"/services"}>
                  SERVICES
+                </Link>
               </li>
               <li>
                  ABOUT US
