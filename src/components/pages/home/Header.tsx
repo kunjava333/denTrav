@@ -52,11 +52,11 @@ export default function Home() {
 
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+    <main className="min-h-screen ">
       {/* Hero Section */}
       <div className="relative mx-auto max-w-7xl">
         {/* Background decoration */}
-        <div className="absolute -left-36 top-20 h-96 w-96 rounded-full bg-blue-100/70 blur-3xl" />
+        <div className="absolute -left-36 top-20 h-96 w-96 rounded-full " />
 
         <div className="relative">
           {/* Hero image */}

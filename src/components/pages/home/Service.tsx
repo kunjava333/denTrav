@@ -52,16 +52,17 @@ export default function DentalServices() {
   }
 
   return (
-    <section className="py-12 px-4 md:px-6 lg:px-8 bg-gray-50">
+    <section className="py-12 px-4 md:px-6 lg:px-8 ">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div className="mb-6 md:mb-0">
             {/* <div className="inline-block cursor-pointer px-4 py-2 text-blue-600 rounded-md text-sm font-medium mb-4"> */}
-            <Button variant="outline" size="sm" className="rounded-md text-blue-600 text-sm font-medium mb-4">
+            {/* <Button variant="outline" size="sm" className="rounded-md text-blue-600 text-sm font-medium mb-4"> */}
+            <Button size="sm" className="rounded-md bg-blue-500 mb-4 text-sm cursor-pointer  font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
 
               Our Services
             </Button>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 max-w-xl">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-700 max-w-xl">
               Our team of dentists can help with a variety of dental services
             </h2>
           </div>

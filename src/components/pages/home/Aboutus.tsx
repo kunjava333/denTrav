@@ -6,7 +6,7 @@ import about_image2 from "@../../../public/about2.jpeg"
 
 export default function AboutUs() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen ">
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="relative">
@@ -35,7 +35,7 @@ export default function AboutUs() {
           <div className="pt-16 md:pt-0">
             <div className="flex justify-end mb-4">
 
-              <Button variant="outline" size="sm" className="rounded-md text-blue-600 text-sm font-medium">
+            <Button size="sm" className="rounded-md bg-blue-500 mb-4 text-sm cursor-pointer  font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                 About Us
               </Button>
             </div>
