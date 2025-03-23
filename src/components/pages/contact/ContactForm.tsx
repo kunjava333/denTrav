@@ -1,38 +1,52 @@
-"use client"
+"use client";
 
-import type React from "react"
+import { useState } from "react";
+import { MapPin, Mail, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
 
-import { useState } from "react"
-import { MapPin, Mail, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+interface FormData {
+  name: string;
+  email: string;
+  phone1: string;
+  message: string;
+}
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     phone1: "",
-    phone2: "",
     message: "",
-  })
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Add your form submission logic here
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await axios.post("/api/send-mail", {
+        ...formData,
+        subject: "New Contact Form Submission",
+      });
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", phone1: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message.");
+    }
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-32 p-4 md:p-6 lg:p-8">
       <div className="flex flex-col md:flex-row gap-8 items-start">
-        {/* Left side - Information */}
+        {/* Left Side - Information */}
         <div className="w-full md:w-1/3 space-y-8">
           <div className="relative">
             <div className="absolute -z-10 top-0 left-0 w-72 h-72 bg-gray-200 rounded-full opacity-50"></div>
@@ -64,7 +78,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Right side - Form */}
+        {/* Right Side - Form */}
         <div className="w-full md:w-2/3 bg-white rounded-lg shadow-sm p-6 border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -85,27 +99,9 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="phone1">Phone Number</Label>
-                <Input
-                  id="phone1"
-                  name="phone1"
-                  placeholder="1315584532"
-                  value={formData.phone1}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone2">Phone Number</Label>
-                <Input
-                  id="phone2"
-                  name="phone2"
-                  placeholder="1315584532"
-                  value={formData.phone2}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone1">Phone Number</Label>
+              <Input id="phone1" name="phone1" placeholder="1315584532" value={formData.phone1} onChange={handleChange} />
             </div>
 
             <div className="space-y-2">
@@ -121,12 +117,11 @@ export default function ContactForm() {
             </div>
 
             <Button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white">
-              Subscribe
+              Send Message
             </Button>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
