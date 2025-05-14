@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -28,6 +29,7 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -35,13 +37,14 @@ export default function ContactForm() {
         ...formData,
         subject: "New Contact Form Submission",
       });
-      alert("Message sent successfully!");
+      toast.success("Message sent successfully!");
       setFormData({ name: "", email: "", phone1: "", message: "" });
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send message.");
+      toast.error("Failed to send message.");
     }
   };
+  
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-32 p-4 md:p-6 lg:p-8">

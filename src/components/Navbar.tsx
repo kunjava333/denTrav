@@ -1,58 +1,200 @@
-import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import ModeToggle from "./ModeToggle";
-import Image from "next/image";
+"use client"
 
-export default async function Navbar() {
-  // get the current user in cleark
-  const user = await currentUser();
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Menu, X } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+// Import Clerk components directly, but handle their usage conditionally
+import { SignInButton } from "@clerk/nextjs"
+import ModeToggle from "./ModeToggle"
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isClerkAvailable, setIsClerkAvailable] = useState(false)
+
+  // Check if Clerk is available in the browser environment
+  useEffect(() => {
+    // This will run only on the client side
+    try {
+      // If we can access window and the Clerk object exists in window
+      // @ts-ignore - Checking if Clerk is globally available
+      if (typeof window !== "undefined" && window.Clerk) {
+        setIsClerkAvailable(true)
+      }
+    } catch (error) {
+      console.error("Clerk not available:", error)
+      setIsClerkAvailable(false)
+    }
+  }, [])
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (isOpen && !target.closest(".mobile-menu") && !target.closest(".menu-button")) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isOpen])
+
+  // Prevent scrolling when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [isOpen])
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const closeMenu = () => {
+    setIsOpen(false)
+  }
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/services", label: "Services" },
+    { href: "/about", label: "About Us" },
+    { href: "/location", label: "Location" },
+    { href: "/contact", label: "Contact" },
+  ]
+
+  // Render auth button based on Clerk availability
+  const renderAuthButton = () => {
+    if (!isClerkAvailable) {
+      return <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
+    }
+
+    // We'll wrap the Clerk components in error boundaries
+    try {
+      return (
+        <>
+          <SignInButton mode="modal">
+            <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
+          </SignInButton>
+        </>
+      )
+    } catch (error) {
+      console.error("Error rendering Clerk components:", error)
+      return <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
+    }
+  }
 
   return (
-    <nav className="bg-white dark:bg-black fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
-          {/* <Image src={hello} className="h-8" alt="Logo" /> */}
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            DENTRAV
-          </span>
-        </a>
+    <nav className="bg-white dark:bg-gray-950 fixed w-full z-30 top-0 start-0 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <span className="self-center text-2xl font-bold whitespace-nowrap dark:text-white">DENTRAV</span>
+        </Link>
 
-        <div className="flex gap-4 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <ModeToggle />
-          {user ? (
-              <UserButton  />
-          ) : (
-            <SignInButton mode="modal">
-              <Button className="rounded-md bg-blue-500 cursor-pointer text-base font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                Sign In
-              </Button>
-            </SignInButton>
-          )}
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
+        {/* Right side (Desktop) */}
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+
+          {/* Auth Button */}
+          {renderAuthButton()}
+
+          {/* Hamburger button (Mobile) */}
+          <button
+            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700 menu-button"
+            onClick={toggleMenu}
+            aria-expanded={isOpen}
+            aria-label="Toggle navigation"
+          >
+            <span className="sr-only">Open main menu</span>
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile menu overlay */}
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-sticky"
+          className={cn(
+            "fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300",
+            isOpen ? "opacity-100" : "opacity-0 pointer-events-none",
+          )}
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+
+        {/* Mobile menu (side panel) */}
+        <div
+          className={cn(
+            "mobile-menu fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 shadow-xl z-50 md:hidden transition-transform duration-300 ease-in-out",
+            isOpen ? "translate-x-0" : "translate-x-full",
+          )}
         >
-          <ul className="flex flex-col text-blue-600 p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:dark:bg-black">
-            <li>
-              <Link href="/">HOME</Link>
-            </li>
-            <li>
-              <Link href="/contact">CONTACT</Link>
-            </li>
-            <li>
-              <Link href="/services">SERVICES</Link>
-            </li>
-            <li>
-              <Link href="/about">ABOUT US</Link>
-            </li>
-            <li>LOCATION</li>
-          </ul>
+          <div className="flex justify-end p-4">
+            <button
+              onClick={closeMenu}
+              className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+              aria-label="Close menu"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="flex flex-col p-6 space-y-6">
+            {navLinks.map((link, index) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className={cn(
+                  "text-xl font-semibold text-gray-700 dark:text-gray-200 transform transition-all duration-300 hover:translate-x-2",
+                  isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+                )}
+                style={{
+                  transitionDelay: isOpen ? `${index * 75}ms` : "0ms",
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+            {isClerkAvailable && (
+              <SignInButton mode="modal">
+                <Button className="w-4/5 py-6 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">
+                  Sign In
+                </Button>
+              </SignInButton>
+            )}
+
+            {!isClerkAvailable && (
+              <Button className="w-4/5 py-6 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
+            )}
+          </div>
         </div>
       </div>
     </nav>
-  );
+  )
 }

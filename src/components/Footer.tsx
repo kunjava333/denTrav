@@ -6,62 +6,12 @@ import { Link, Mail } from "lucide-react";
 import axios from "axios";
 
 export default function Footer() {
-  const [email, setEmail] = useState<string>("");
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
-
-  // Check subscription status from localStorage on page load
-  useEffect(() => {
-    const storedSubscription = localStorage.getItem("isSubscribed") === "true";
-    setIsSubscribed(storedSubscription);
-  }, []);
-
-  const handleSubscription = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (isSubscribed) {
-      alert("You are already subscribed!");
-      return;
-    }
-
-    try {
-      const response = await axios.post("/api/users/subscribe", { email });
-
-      if (response.status === 201 || response.status === 200) {
-        localStorage.setItem("isSubscribed", "true");
-        setIsSubscribed(true); // ✅ Trigger re-render instantly
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.error("Subscription error:", error);
-      alert("An error occurred. Please try again.");
-    }
-  };
+ 
 
   return (
     <>
       <footer className="bg-white dark:bg-black mt-60">
-        {/*  Subscription */}
-        {!isSubscribed ? (
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="pl-10 w-full"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <Button
-                onClick={handleSubscription}
-                className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
-              >
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        ): null}
+     
 
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
