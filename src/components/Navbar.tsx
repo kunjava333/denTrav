@@ -2,33 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-// Import Clerk components directly, but handle their usage conditionally
-import { SignInButton } from "@clerk/nextjs"
 import ModeToggle from "./ModeToggle"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isClerkAvailable, setIsClerkAvailable] = useState(false)
 
-  // Check if Clerk is available in the browser environment
-  useEffect(() => {
-    // This will run only on the client side
-    try {
-      // If we can access window and the Clerk object exists in window
-      // @ts-ignore - Checking if Clerk is globally available
-      if (typeof window !== "undefined" && window.Clerk) {
-        setIsClerkAvailable(true)
-      }
-    } catch (error) {
-      console.error("Clerk not available:", error)
-      setIsClerkAvailable(false)
-    }
-  }, [])
-
+  
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -69,30 +50,10 @@ export default function Navbar() {
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
     { href: "/about", label: "About Us" },
-    { href: "/location", label: "Location" },
     { href: "/contact", label: "Contact" },
   ]
 
-  // Render auth button based on Clerk availability
-  const renderAuthButton = () => {
-    if (!isClerkAvailable) {
-      return <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
-    }
-
-    // We'll wrap the Clerk components in error boundaries
-    try {
-      return (
-        <>
-          <SignInButton mode="modal">
-            <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
-          </SignInButton>
-        </>
-      )
-    } catch (error) {
-      console.error("Error rendering Clerk components:", error)
-      return <Button className="rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
-    }
-  }
+ 
 
   return (
     <nav className="bg-white dark:bg-gray-950 fixed w-full z-30 top-0 start-0 border-b border-gray-200 dark:border-gray-800 shadow-sm">
@@ -118,9 +79,6 @@ export default function Navbar() {
         {/* Right side (Desktop) */}
         <div className="flex items-center gap-4">
           <ModeToggle />
-
-          {/* Auth Button */}
-          {renderAuthButton()}
 
           {/* Hamburger button (Mobile) */}
           <button
@@ -180,19 +138,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="absolute bottom-8 left-0 right-0 flex justify-center">
-            {isClerkAvailable && (
-              <SignInButton mode="modal">
-                <Button className="w-4/5 py-6 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">
-                  Sign In
-                </Button>
-              </SignInButton>
-            )}
-
-            {!isClerkAvailable && (
-              <Button className="w-4/5 py-6 rounded-md bg-emerald-600 text-white hover:bg-emerald-700">Sign In</Button>
-            )}
-          </div>
         </div>
       </div>
     </nav>
