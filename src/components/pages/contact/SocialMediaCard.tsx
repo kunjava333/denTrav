@@ -1,15 +1,38 @@
 "use client"
 import { Card, CardContent } from "@/components/ui/card";
-import { Facebook, Twitter, Instagram, MapPin } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faTiktok, faInstagram, faPinterest } from "@fortawesome/free-brands-svg-icons";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const socialMedia = [
-  { name: "Facebook", icon: <Facebook size={24} />, link: "#", text: "Follow Us" },
-  { name: "Twitter", icon: <Twitter size={24} />, link: "#", text: "Follow Us" },
-  { name: "Instagram", icon: <Instagram size={24} />, link: "#", text: "Follow Us" },
-  { name: "Location", icon: <MapPin size={24} />, link: "#", text: "View Location" },
+  {
+    name: "Facebook",
+    icon: <FontAwesomeIcon icon={faFacebookF} size="lg" />,
+    link: "#",
+    text: "Follow Us",
+  },
+  {
+    name: "Tiktok",
+    icon: <FontAwesomeIcon icon={faTiktok} size="lg" />,
+    link: "#",
+    text: "Follow Us",
+  },
+  {
+    name: "Instagram",
+    icon: <FontAwesomeIcon icon={faInstagram} size="lg" />,
+    link: "#",
+    text: "Follow Us",
+  },
+  {
+    name: "Pinterest",
+    icon: <FontAwesomeIcon icon={faPinterest} size="lg" />,
+    link: "#",
+    text: "View Location",
+  },
 ];
+
 
 export default function SocialMediaCards() {
   return (

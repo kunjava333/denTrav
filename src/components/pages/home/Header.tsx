@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Mail, SmileIcon as Tooth, Phone, Wrench } from "lucide-react";
 import { Button } from "../../ui/button";
-import header from '@../../../public/header.jpg';
+import header from '@../../../public/header2.jpg';
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
         title: "Contact Us",
         description: "Go to this step-by-step guideline process on how to",
         linkText: "Book an Appointment",
-        href: "#",
+        href: "/contact",
       },
       {
         icon: <Clock className="w-7 h-7 text-gray-500 mb-3" />,
@@ -29,12 +29,12 @@ export default function Home() {
         title: "Service",
         description: "Explore our range of professional services.",
         linkText: "View Services",
-        href: "#",
+        href: "/services",
       },
     ];
 
     return (
-      <div className="rounded-xl bg-white p-6 shadow-lg">
+      <div className="hidden sm:block rounded-xl bg-white p-6 shadow-lg">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {cards.map((card, index) => (
             <motion.div
@@ -63,7 +63,7 @@ export default function Home() {
       {/* Hero Section */}
       <div className="relative mx-auto max-w-7xl">
         {/* Background decoration */}
-        <div className="absolute -left-36 top-20 h-96 w-96 rounded-full opacity-30 bg-blue-200" />
+        {/* <div className="absolute -left-36 top-20 h-96 w-96 rounded-full opacity-30 bg-blue-200" /> */}
 
         <div className="relative">
           {/* Hero image */}
@@ -81,20 +81,20 @@ export default function Home() {
           {/* Text overlay */}
           <div className="absolute left-0 top-0 flex h-full w-full">
             <div className="ml-6 mt-16 max-w-md space-y-6 md:ml-12 md:mt-30 lg:ml-20">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl lg:text-5xl">
+              <h1 className="text-3xl font-bold leading-tight text-white dark:text-black md:text-4xl lg:text-5xl">
                 Transforming Smiles With Expert Dental Care
               </h1>
 
               <div className="flex flex-col gap-1">
-                <div className="w-36 border-b-3 border-black" />
-                <div className="w-30 border-b-3 border-black" />
+                <div className="w-36 border-b-3 border-white dark:border-black" />
+                <div className="w-30 border-b-3 border-white dark:border-black" />
               </div>
 
               <div>
                 <Button
                   className="inline-flex items-center justify-center rounded-md bg-blue-500 px-6 py-6 text-base font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                  Book an Appointment
+                 <a href="/contact"> Book an Appointment</a>
                 </Button>
               </div>
             </div>

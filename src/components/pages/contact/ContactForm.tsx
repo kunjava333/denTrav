@@ -52,8 +52,8 @@ export default function ContactForm() {
         {/* Left Side - Information */}
         <div className="w-full md:w-1/3 space-y-8">
           <div className="relative">
-            <div className="absolute -z-10 top-0 left-0 w-72 h-72 bg-gray-200 rounded-full opacity-50"></div>
-            <div className="h-32"></div> {/* Spacer for the circle background */}
+            {/* <div className="absolute -z-10 top-0 left-0 w-72 h-72 bg-gray-200 rounded-full opacity-50"></div> */}
+            {/* <div className="h-32"></div> Spacer for the circle background */}
           </div>
 
           <div className="space-y-2">
@@ -63,26 +63,26 @@ export default function ContactForm() {
                 <div className="bg-blue-100 p-2 rounded-full">
                   <MapPin className="h-5 w-5 text-blue-500" />
                 </div>
-                <div className="text-gray-600">Address</div>
+                <div ><a href="/about" className=" hover:text-blue-500 transition-colors">Address</a></div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="bg-blue-100 p-2 rounded-full">
                   <Mail className="h-5 w-5 text-blue-500" />
                 </div>
-                <div className="text-gray-600">Email</div>
+                <div><a href="mailto: dentravinternational@gmail.com" className="hover:text-blue-500 transition-colors">Email</a></div>
               </div>
               <div className="flex items-center gap-3">
                 <div className="bg-blue-100 p-2 rounded-full">
                   <Phone className="h-5 w-5 text-blue-500" />
                 </div>
-                <div className="text-gray-600">Phone</div>
+                <div><a href="tel: +37066195755" className=" hover:text-blue-500 transition-colors">Phone</a></div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Right Side - Form */}
-        <div className="w-full md:w-2/3 bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+        <div className="w-full md:w-2/3 rounded-lg shadow-sm p-6 border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">

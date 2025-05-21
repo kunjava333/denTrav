@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import ModeToggle from "./ModeToggle"
+import ModeToggle from "./ModeToggle";
+import logo from '@../../../public/logo3.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -60,7 +61,7 @@ export default function Navbar() {
       <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <span className="self-center text-2xl font-bold whitespace-nowrap dark:text-white">DENTRAV</span>
+          <span className="self-center flex gap-2 text-2xl font-bold whitespace-nowrap dark:text-white"> <img src = {logo.src} alt="" className="h-7 w-auto"/> DenTrav </span>
         </Link>
 
         {/* Desktop Navigation */}

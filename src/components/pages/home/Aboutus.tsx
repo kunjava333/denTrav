@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import about_image1 from "@../../../public/about1.jpeg"
+import about_image1 from "@../../../public/main.jpg"
 import about_image2 from "@../../../public/about2.jpeg"
 
 export default function AboutUs() {
@@ -36,27 +36,24 @@ export default function AboutUs() {
             <div className="flex justify-end mb-4">
 
             <Button size="sm" className="rounded-md bg-blue-500 mb-4 text-sm cursor-pointer  font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                About Us
+                <a href="/about">About Us</a>
               </Button>
             </div>
 
             <div className="space-y-4 mb-8">
-              <div className="h-4 bg-gray-100 rounded w-full"></div>
-              <div className="h-4 bg-gray-100 rounded w-full"></div>
-              <div className="h-4 bg-gray-100 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-100 rounded w-full"></div>
-              <div className="h-4 bg-gray-100 rounded w-5/6"></div>
+              <div className="h-4 rounded w-full flex"><p>DenTrav blends expert dental care with Kerala’s serene charm. Think sunlit backwaters, peaceful recovery, and curated experiences. It’s not just about treatment—it’s about feeling better, inside and out. Come for the care, stay for the journey.
+              </p></div>
             </div>
 
             <div className="flex items-center gap-3 mb-6">
               <Avatar className="h-12 w-12">
                 <AvatarImage src="/placeholder.svg" alt="Doctor" />
-                <AvatarFallback>Dr</AvatarFallback>
+                {/* <AvatarFallback>Dr</AvatarFallback> */}
               </Avatar>
-              <span className="text-sm font-medium">Dr</span>
+              {/* <span className="text-sm font-medium">Dr</span> */}
             </div>
 
-            <Button className="rounded-md bg-blue-500 cursor-pointer text-base font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">About our clinic</Button>
+            {/* <Button className="rounded-md bg-blue-500 cursor-pointer text-base font-medium text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"><a href="/about">About our clinic</a></Button> */}
           </div>
         </div>
       </div>
